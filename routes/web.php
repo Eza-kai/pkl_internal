@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BackendController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\MyController;
@@ -17,13 +18,11 @@ use App\Http\Middleware\Admin;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [FrontendController::class, 'index']);
+Route::get('/about', [FrontendController::class, 'about']);
+Route::get('/product', [FrontendController::class, 'product']);
+Route::get('/cart', [FrontendController::class, 'cart']);
 
-Route::get('about', function () {
-    return 'ini halaman about';
-});
 
 Route::get('profile', function () {
     return view('profile');
@@ -60,6 +59,6 @@ Route::group(['prefix'=> 'admin', 'middleware'=> ['auth', Admin::class]], functi
     Route::get('/', [BackendController::class, 'index']);
     // 
     Route::resource('/category', CategoryController::class);
-    Route::resource('/product', CategoryController::class);
+    Route::resource('/product', ProductController::class);
         
     });
